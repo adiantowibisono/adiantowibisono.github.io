@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume</title>
+    <script src="tailwindcss.min.js"></script>
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+        }
+        body.fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        body.fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.68,-0.55,.27,1.55), transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+      }
+      // Animate on scroll
+      document.addEventListener('DOMContentLoaded', function() {
+        var animatedEls = document.querySelectorAll('.animate-on-scroll');
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        animatedEls.forEach(function(el) {
+          observer.observe(el);
+        });
+        // Smooth page transition
+        document.body.classList.add('fade-in');
+        var links = document.querySelectorAll('a[href]:not([target])');
+        links.forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            if (link.hostname === window.location.hostname && link.getAttribute('href')[0] !== '#') {
+              e.preventDefault();
+              document.body.classList.remove('fade-in');
+              document.body.classList.add('fade-out');
+              setTimeout(function() {
+                window.location = link.href;
+              }, 500);
+            }
+          });
+        });
+      });
+    </script>
+</head>
+<body class="bg-zinc-900 text-white font-sans min-h-screen">
+    <!-- Navbar -->
+    <nav class="bg-zinc-900/60 w-full h-20 flex items-center justify-between p-6 px-32 backdrop-blur fixed z-50">
+        <div>
+            <a href="index.html" class="text-lime-400 font-bold text-2xl">Adianto Wibisono</a>
+        </div>
+        <div class="space-x-12 text-lg">
+            <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
+            <a href="aboutme.html" class="hover:text-lime-400 transition">About me</a>
+        </div>
+    </nav>
+    <!-- Resume Content -->
+    <section class="flex justify-center pt-40 pb-20 animate-on-scroll">
+        <div class="bg-zinc-900/80 w-[60rem] rounded-2xl border border-white/10 shadow-md p-12 flex flex-col gap-10 animate-on-scroll">
+            <!-- Profile -->
+            <div class="flex flex-col items-center gap-4 animate-on-scroll">
+                <div class="bg-lime-400 w-36 h-36 rounded-full overflow-hidden border-4 border-zinc-800 flex items-center justify-center animate-on-scroll">
+                    <img src="asset/kucing.jpeg" alt="Profile Photo" class="w-32 h-32 object-cover rounded-full animate-on-scroll">
+                </div>
+                <h2 class="text-3xl font-bold text-lime-400 animate-on-scroll">Adianto Wibisono</h2>
+                <p class="text-zinc-300 text-lg text-center max-w-2xl animate-on-scroll">
+                    Design Supervisor | Expanding into 3D & UI/UX | Future Focused Creative Leader<br>
+                    Focused on delivering creative, timeless, and visually effective design solutions
+                </p>
+            </div>
+            <!-- Experience -->
+            <div class="animate-on-scroll">
+                <h3 class="text-2xl font-bold text-white mb-4 animate-on-scroll">Experience</h3>
+                <div class="flex flex-col gap-4 animate-on-scroll">
+                    <div class="animate-on-scroll">
+                        <span class="font-semibold text-lime-400 animate-on-scroll">Graphic Design Supervisor</span>
+                        <span class="text-zinc-400 ml-2 animate-on-scroll">Otoproject</span>
+                        <span class="text-zinc-500 ml-2 text-sm animate-on-scroll">2023 Feb - Present</span>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Supervise and guide the design team in developing visual directions aligned with management’s vision and goals.
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Lead the creation of impactful and consistent visual content to strengthen brand identity across platforms.
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Responsible for product photography, photo editing, and marketplace design to support sales and marketing needs.
+                        </p>
+                    </div>
+                    <div class="animate-on-scroll">
+                        <span class="font-semibold text-lime-400 animate-on-scroll">Junior Graphic Designer</span>
+                        <span class="text-zinc-400 ml-2 animate-on-scroll">OhMan! (Local pomade brand)</span>
+                        <span class="text-zinc-500 ml-2 text-sm animate-on-scroll">2021 Nov - 2022 Aug</span>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Executed product photography and visual asset creation for OhMan! and Happy.
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Designed social media and marketplace materials (Ohmanworld & OhManOfficial Store). 
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Content Creator & Copywriter (OhMan!) -Video Editing for Tiktok & Instagram Reels (OhMan!) 
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Produced and edited engaging video content for TikTok and Instagram Reels.
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Developed strategies to strengthen OhMan! Pomade brand awareness.
+                        </p>
+                        <p class="text-zinc-300 ml-1 mt-1 text-base animate-on-scroll">
+                            - Designed print and digital advertisements to support marketing campaigns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Education -->
+            <div class="animate-on-scroll">
+                <h3 class="text-2xl font-bold text-white mb-4 animate-on-scroll">Education</h3>
+                <div class="animate-on-scroll">
+                    <span class="font-semibold text-lime-400 animate-on-scroll">S.Ds. in Art & Design</span>
+                    <span class="text-zinc-400 ml-2 animate-on-scroll">Universitas Multimedia Nusantara</span>
+                    <span class="text-zinc-500 ml-2 text-sm animate-on-scroll">2015 - 2020</span>
+                </div>
+            </div>
+            <div class="animate-on-scroll">
+                <h3 class="text-2xl font-bold text-white mb-4 animate-on-scroll">Language</h3>
+                <div class="animate-on-scroll">
+                    <span class="font-semibold text-lime-400 animate-on-scroll">English</span>
+                    <span class="text-zinc-400 ml-2 animate-on-scroll">- Conversational Level</span>
+                    <span class="text-zinc-500 ml-2 text-sm animate-on-scroll"> TOEIC 777</span>
+                </div>
+                <div class="animate-on-scroll">
+                    <span class="font-semibold text-lime-400 animate-on-scroll">Mandarin</span>
+                    <span class="text-zinc-400 ml-2 animate-on-scroll">- Basic Level</span>
+                </div>
+            </div>
+            <!-- Skills -->
+            <div class="animate-on-scroll">
+                <h3 class="text-2xl font-bold text-white mb-4 animate-on-scroll">Skills</h3>
+                <div class="flex flex-wrap gap-3 animate-on-scroll">
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">Adobe Photoshop</span>
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">Adobe Illustrator</span>
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">UI/UX (Basic Knowledge)</span>
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">3D (Basic Knowledge)</span>
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">Photography</span>
+                </div>
+            </div>
+            <!-- contact -->
+            <div class="animate-on-scroll">
+                <h4 class="text-2xl font-bold text-white mb-4 animate-on-scroll">Contact</h4>
+                <div class="flex flex-wrap gap-3 animate-on-scroll">
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">adiantowibisonoo@gmail.com</span>
+                    <span class="bg-lime-400/20 text-lime-300 px-4 py-1 rounded-full text-sm font-semibold animate-on-scroll">+62 851-2214-1720</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
