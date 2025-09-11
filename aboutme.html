@@ -21,11 +21,21 @@
 </head>
 <body class="bg-zinc-900 text-white font-sans min-h-screen fade-in">
 
-    <nav class="bg-zinc-900/60 w-full h-20 flex items-center justify-between p-6 px-32 backdrop-blur fixed z-50">
+    <nav class="bg-zinc-900/60 w-full h-20 flex items-center justify-between p-6 px-6 md:px-32 backdrop-blur fixed z-50">
         <div>
             <a href="index.html" class="text-lime-400 font-bold text-2xl">Adianto Wibisono</a>
         </div>
-        <div class="space-x-12 text-lg">
+        <!-- Burger button for mobile -->
+        <button class="md:hidden block text-lime-400 focus:outline-none" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+        <!-- Desktop menu -->
+        <div class="space-x-4 md:space-x-12 text-lg flex-col md:flex-row items-end md:items-center hidden md:flex">
+            <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
+            <a href="resume.html" class="hover:text-lime-400 transition">About me</a>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="absolute top-20 left-0 w-full bg-zinc-900/90 backdrop-blur-lg flex flex-col items-center py-6 space-y-4 text-lg md:hidden hidden">
             <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
             <a href="resume.html" class="hover:text-lime-400 transition">About me</a>
         </div>
@@ -63,11 +73,11 @@
                                 <div><span class="text-zinc-400 ml-2"><i>Bagian 2: Pekerjaan</i></span></div>
                         </div>
                         <p>
-                            saya bekerja sebagai seorang desain grafis dimulai sejak 2019, pada saat itu saya mengambil cuti kuliah kemudian mencoba untuk bekerja. Saya di terima di perusahaan startup bernama Rentfix, Disana saya bekerja sebagai desainer grafis magang. Ditahun 2020 saya memilih keluar dan melanjutkan tugas akhir saya.
+                            Saya bekerja sebagai seorang desain grafis dimulai sejak 2019, pada saat itu saya mengambil cuti kuliah kemudian mencoba untuk bekerja. Saya di terima di perusahaan startup bernama Rentfix, Disana saya bekerja sebagai desainer grafis magang. Ditahun 2020 saya memilih keluar dan melanjutkan tugas akhir saya.
                         </p>
     
                         <p>
-                            Di tahun 2021 saya mendapatkan pekerjaan pertama saya di PT. Inti Pesona Lestari. Disana saya diberi jabatan sebagai Junior Graphic Designer dan bertanggung jawab atas semua kebutuhan desain dan materi pemasaran digital. Disini saya belajar banyak hal mulai dari mendesign sticker untuk label kaleng pomade, dunia percetakan, belajar bagaimana cara bekerja di dalam tim, berkomunikasi dengan klien, dan mengelola waktu dengan baik.
+                            Di tahun 2021 saya mendapatkan pekerjaan pertama saya di PT. Inti Pesona Lestari. Disana saya diberi jabatan sebagai Junior Graphic Designer dan bertanggung jawab atas semua kebutuhan desain dan materi pemasaran digital. Disini saya belajar banyak hal mulai dari mendesign sticker untuk label kaleng pomade, dunia percetakan, belajar bagaimana memimpin sebuah tim, belajar bagaiaman menyampaikan arahan yang jelas dan tepat, mengelola waktu dengan baik & berani mengambil keputusan. Pengalaman ini sangat berharga bagi saya karena saya belajar banyak hal baru yang tidak saya dapatkan di bangku kuliah.
                         </p>
 
                            <p>
@@ -86,7 +96,7 @@
                                 <div><span class="text-zinc-400 ml-2"><i>Bagian 3: Tujuan kedepan</i></span></div>
                         </div>
                         <p>
-                            Dengan pengalaman yang saya miliki sekarang, saya ingin melanjutkan karir saya ke level yang lebih tinggi, seperti menjadi Art Director atau Creative Director di masa depan. Saya juga berencana untuk terus mengembangkan keterampilan saya dalam desain digital dan teknologi terbaru untuk tetap relevan di industri yang terus berubah ini. Selain itu, saya ingin berkontribusi pada proyek-proyek yang memiliki dampak positif bagi masyarakat, seperti desain yang mendukung keberlanjutan lingkungan atau inisiatif sosial.
+                            Dengan pengalaman yang saya miliki sekarang, saya ingin melanjutkan karir saya ke level yang lebih tinggi, seperti menjadi Art Director atau Creative Director di masa depan. Saya juga berencana untuk terus mengembangkan keterampilan saya dalam desain digital dan teknologi terbaru untuk tetap relevan di industri yang terus berubah ini. Selain itu, saya ingin berkontribusi pada proyek-proyek yang memiliki dampak positif bagi masyarakat, seperti di industri energi terbarukan atau inisiatif sosial.
                         </p>
     
         <!-- Goals -->
@@ -132,4 +142,10 @@
             });
         </script>
 </body>
+<script>
+    function toggleMenu() {
+        var menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>
 </html>

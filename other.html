@@ -17,6 +17,69 @@
             opacity: 1;
             transition: opacity 0.5s ease;
         }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay.active {
+            display: flex;
+        }
+        .overlay img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        .overlay img.zoomed {
+            transform: scale(1.5);
+            cursor: move;
+            position: relative;
+        }
+        .overlay img.dragging {
+            transition: none;
+            cursor: grabbing;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        .zoomable-img {
+            cursor: zoom-in;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .overlay-img {
+            cursor: zoom-out;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
     </style>
     <script>
       function toggleMenu() {
@@ -39,33 +102,159 @@
             }
           });
         });
+
+        // Image zoom functionality
+        const images = document.querySelectorAll('.zoomable-img');
+        const overlay = document.querySelector('.overlay');
+        const overlayImg = document.querySelector('.overlay-img');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Prevent default browser zoom on double click
+        document.addEventListener('dblclick', function(e) {
+            if (e.target.classList.contains('zoomable-img') || e.target.classList.contains('overlay-img')) {
+                e.preventDefault();
+            }
+        });
+
+        // Prevent browser zoom on mobile devices
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
+        images.forEach(img => {
+            // Prevent default browser zoom/save image
+            img.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            img.addEventListener('click', function() {
+                overlayImg.src = this.src;
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        let isDragging = false;
+        let startPos = { x: 0, y: 0 };
+        let currentTranslate = { x: 0, y: 0 };
+        let lastTranslate = { x: 0, y: 0 };
+
+        // Add zoom functionality to overlay image
+        overlayImg.addEventListener('click', function(e) {
+            if (!isDragging) {
+                e.stopPropagation(); // Prevent overlay from closing
+                this.classList.toggle('zoomed');
+                if (!this.classList.contains('zoomed')) {
+                    // Reset position when unzoomed
+                    this.style.transform = 'scale(1)';
+                    currentTranslate = { x: 0, y: 0 };
+                    lastTranslate = { x: 0, y: 0 };
+                }
+            }
+        });
+
+        // Mouse down event - start dragging
+        overlayImg.addEventListener('mousedown', function(e) {
+            if (this.classList.contains('zoomed')) {
+                isDragging = true;
+                this.classList.add('dragging');
+                startPos = {
+                    x: e.clientX - currentTranslate.x,
+                    y: e.clientY - currentTranslate.y
+                };
+            }
+        });
+
+        // Mouse move event - update position while dragging
+        window.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+            
+            e.preventDefault();
+            currentTranslate = {
+                x: e.clientX - startPos.x,
+                y: e.clientY - startPos.y
+            };
+            
+            // Update image position
+            overlayImg.style.transform = `scale(1.5) translate(${currentTranslate.x}px, ${currentTranslate.y}px)`;
+        });
+
+        // Mouse up event - stop dragging
+        window.addEventListener('mouseup', function() {
+            if (isDragging) {
+                isDragging = false;
+                overlayImg.classList.remove('dragging');
+                lastTranslate = currentTranslate;
+            }
+        });
+
+        // Mouse leave event - stop dragging if mouse leaves window
+        window.addEventListener('mouseleave', function() {
+            if (isDragging) {
+                isDragging = false;
+                overlayImg.classList.remove('dragging');
+                lastTranslate = currentTranslate;
+            }
+        });
+
+        // Prevent zoom on overlay image
+        overlayImg.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
       });
     </script>
 </head>
 <body class="bg-zinc-900 text-white font-sans min-h-screen">
+    <!-- Image Overlay -->
+    <div class="overlay">
+        <button class="close-btn">&times;</button>
+        <img class="overlay-img" src="" alt="">
+    </div>
     <!-- Navbar -->
-    <nav class="bg-zinc-900/60 w-full h-20 flex items-center justify-between p-6 px-32 backdrop-blur fixed z-50">
+    <nav class="bg-zinc-900/60 top-0 w-full h-[56px] md:h-20 flex items-center justify-between p-6 px-6 md:px-32 backdrop-blur fixed z-50">
         <div>
             <a href="index.html" class="text-lime-400 font-bold text-2xl">Adianto Wibisono</a>
         </div>
-        <div class="space-x-12 text-lg">
+        <!-- Burger button for mobile -->
+        <button class="md:hidden block text-lime-400 focus:outline-none" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+        <!-- Desktop menu -->
+        <div class="space-x-4 md:space-x-12 text-lg flex-col md:flex-row items-end md:items-center hidden md:flex">
+            <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
+            <a href="aboutme.html" class="hover:text-lime-400 transition">About me</a>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="absolute top-[56px] left-0 w-full bg-zinc-900/90 backdrop-blur-lg flex flex-col items-center py-6 space-y-4 text-lg md:hidden hidden">
             <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
             <a href="aboutme.html" class="hover:text-lime-400 transition">About me</a>
         </div>
     </nav>
 
     <!-- 3D otoproject -->
-    <div>
-        <p class="pt-40 ml-[8rem] text-lime-500 font-bold text-4xl">
+    <div class="md:pt-20 md:pb-10 px-6 pt-12 pb-5 md:px-[8rem] mt-10">
+        <p class="text-lime-500 font-bold text-2xl md:text-4xl">
             3D & Packaging Design
         </p>
-        <p class="ml-[8rem] text-zinc-500 w-full text-xl italic pt-2"><i>marketplace design/photography/digital imaging</i></p>
+        <p class="text-zinc-500 w-full text-base md:text-xl italic"><i>marketplace design/photography/digital imaging</i></p>
     </div>
     
-    <div class="pt-10 flex gap-20 p-[8rem] justify-between">
-        <div class="flex flex-col gap-10">
-            <div class="w-full h-[60rem]">
-                <img src="asset/packagingoto.png" alt="packagingtire">
+    <div class="flex gap-20 px-6 md:px-[8rem] justify-between mb-20">
+        <div class="flex flex-col gap-10 w-full">
+            <div class="w-full">
+                <img src="asset/packagingoto.png" alt="packagingtire" loading="lazy" class="zoomable-img">
             </div>
         </div>  
     </div>
