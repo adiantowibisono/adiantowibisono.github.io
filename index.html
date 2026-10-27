@@ -4,94 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV & Portfolio adi</title>
-  <script src="tailwindcss.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <style>
-        * {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+ ```html
+<!-- Tailwind CSS -->
+<script src="tailwindcss.min.js"></script>
+
+<!-- AOS Animation -->
+<link
+    href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+    rel="stylesheet"
+>
+
+<style>
+    * {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body {
+        opacity: 1;
+    }
+
+    body.fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    body.fade-in {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    @keyframes bounceDown {
+        0% {
+            transform: translateY(-30px);
         }
-        body.fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease;
+        50% {
+            transform: translateY(10px);
         }
-        body.fade-in {
-            opacity: 1;
-            transition: opacity 0.5s ease;
+        70% {
+            transform: translateY(-5px);
         }
-        @keyframes bounceDown {
-            0% { transform: translateY(-30px); }
-            50% { transform: translateY(10px); }
-            70% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
+        100% {
+            transform: translateY(0);
         }
-        .animate-bounce-down {
-            animation: bounceDown 0.7s cubic-bezier(.68,-0.55,.27,1.55);
-        }
-        .scrollbar-hide {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;  /* Chrome, Safari and Opera */
-        }
-    </style>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-      function toggleMenu() {
-        var menu = document.getElementById('mobile-menu');
+    }
+
+    .animate-bounce-down {
+        animation: bounceDown 0.7s cubic-bezier(.68, -0.55, .27, 1.55);
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+<!-- AOS Script -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+    // Mobile menu
+    function toggleMenu() {
+        const menu = document.getElementById('mobile-menu');
+
+        if (!menu) return;
+
         if (menu.classList.contains('hidden')) {
             menu.classList.remove('hidden');
-            // Trigger reflow to enable animation
+
+            // Trigger reflow for animation
             menu.offsetHeight;
-            menu.classList.remove('-translate-y-full', 'opacity-0');
+
+            menu.classList.remove(
+                '-translate-y-full',
+                'opacity-0'
+            );
         } else {
-            menu.classList.add('-translate-y-full', 'opacity-0');
-            // Wait for animation to complete before hiding
+            menu.classList.add(
+                '-translate-y-full',
+                'opacity-0'
+            );
+
             setTimeout(() => {
                 menu.classList.add('hidden');
             }, 300);
         }
-      }
-      // Smooth page transition + scroll down effect for Portfolio
-      document.addEventListener('DOMContentLoaded', function() {
+    }
+
+    // Restore page visibility when navigating Back or Forward
+    window.addEventListener('pageshow', function () {
+        document.body.classList.remove('fade-out');
         document.body.classList.add('fade-in');
-        var links = document.querySelectorAll('a[href]:not([target])');
-        links.forEach(function(link) {
-          link.addEventListener('click', function(e) {
-            // Custom scroll down effect for #portfolio
-            if (link.getAttribute('href') === '#portfolio') {
-              e.preventDefault();
-              var target = document.getElementById('portfolio');
-              if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-              // Optional: add a slight bounce effect
-              target.classList.add('animate-bounce-down');
-              setTimeout(function() {
-                target.classList.remove('animate-bounce-down');
-              }, 700);
-              return;
-            }
-            // Smooth page transition
-            if (link.hostname === window.location.hostname && link.getAttribute('href')[0] !== '#') {
-              e.preventDefault();
-              document.body.classList.remove('fade-in');
-              document.body.classList.add('fade-out');
-              setTimeout(function() {
-                window.location = link.href;
-              }, 500);
-            }
-          });
+    });
+
+    // Page transition and Portfolio scroll
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.classList.remove('fade-out');
+        document.body.classList.add('fade-in');
+
+        const links = document.querySelectorAll(
+            'a[href]:not([target])'
+        );
+
+        links.forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const href = link.getAttribute('href');
+
+                if (!href) return;
+
+                // Smooth scroll to Portfolio
+                if (href === '#portfolio') {
+                    const target = document.getElementById('portfolio');
+
+                    if (target) {
+                        e.preventDefault();
+
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        target.classList.add('animate-bounce-down');
+
+                        setTimeout(function () {
+                            target.classList.remove('animate-bounce-down');
+                        }, 700);
+                    }
+
+                    return;
+                }
+
+                // Only apply transitions to same-site page links
+                if (
+                    link.hostname === window.location.hostname &&
+                    !href.startsWith('#') &&
+                    !link.hasAttribute('download') &&
+                    link.getAttribute('target') !== '_blank'
+                ) {
+                    e.preventDefault();
+
+                    document.body.classList.remove('fade-in');
+                    document.body.classList.add('fade-out');
+
+                    setTimeout(function () {
+                        window.location.href = link.href;
+                    }, 500);
+                }
+            });
         });
-        // Inisialisasi AOS
+
+        // Initialize AOS animation
         if (window.AOS) {
-          AOS.init({
-            duration: 800,
-            once: true
-          });
+            AOS.init({
+                duration: 800,
+                once: true
+            });
         }
-      });
-    </script>
+    });
+</script>
+```
 </head>
 <body class="bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 text-white font-sans">
   <!-- navbar -->
