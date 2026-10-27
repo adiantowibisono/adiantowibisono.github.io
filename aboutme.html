@@ -1,176 +1,276 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About me</title>
+    <meta name="theme-color" content="#18181b">
+    <title>About Me | Adianto Wibisono</title>
+
     <script src="tailwindcss.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+    >
+
     <style>
         * {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                'Roboto', 'Helvetica Neue', Arial, sans-serif;
         }
-        body.fade-out {
-            opacity: 0;
-            transition: opacity 0.5s ease;
+
+        html {
+            scroll-behavior: smooth;
         }
-        body.fade-in {
+
+        body {
             opacity: 1;
-            transition: opacity 0.5s ease;
+        }
+
+        body.fade-in {
+            animation: pageFadeIn 0.3s ease;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0.7; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            body.fade-in {
+                animation: none;
+            }
         }
     </style>
 </head>
-<body class="bg-zinc-900 text-white font-sans min-h-screen fade-in">
 
-    <nav class="bg-zinc-900/60 w-full h-20 flex items-center justify-between p-6 px-6 md:px-32 backdrop-blur fixed z-50">
+<body class="bg-zinc-900 text-white font-sans min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-zinc-900/60 w-full min-h-20 flex items-center justify-between p-6 px-6 md:px-32 backdrop-blur fixed top-0 left-0 z-50">
+
         <div>
-            <a href="index.html" class="text-lime-400 font-bold text-xl">Adianto Wibisono</a>
+            <a href="index.html" class="text-lime-400 font-bold text-xl">
+                Adianto Wibisono
+            </a>
         </div>
-        <!-- Burger button for mobile -->
-        <button class="md:hidden block text-lime-400 focus:outline-none" onclick="toggleMenu()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+
+        <!-- Mobile menu button -->
+        <button
+            type="button"
+            class="md:hidden block text-lime-400 focus:outline-none"
+            onclick="toggleMenu()"
+            aria-label="Toggle navigation menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+            id="menu-toggle"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                />
+            </svg>
         </button>
+
         <!-- Desktop menu -->
-        <div class="space-x-4 md:space-x-12 text-lg flex-col md:flex-row items-end md:items-center hidden md:flex">
-            <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
-            <a href="resume.html" class="hover:text-lime-400 transition">About me</a>
-            <a href="https://www.linkedin.com/in/adianto-wibisono-55bb34277" class="hover:text-lime-400 transition">LinkedIn</a>
+        <div class="space-x-4 md:space-x-12 text-lg hidden md:flex items-center">
+            <a href="index.html#portfolio" class="hover:text-lime-400 transition">
+                Portfolio
+            </a>
+            <a href="aboutme.html" class="text-lime-400 transition">
+                About me
+            </a>
+            <a
+                href="https://www.linkedin.com/in/adianto-wibisono-55bb34277"
+                class="hover:text-lime-400 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                LinkedIn
+            </a>
         </div>
+
         <!-- Mobile menu -->
-        <div id="mobile-menu" class="absolute top-20 left-0 w-full bg-zinc-900/90 backdrop-blur-lg flex flex-col items-center py-6 space-y-4 text-lg md:hidden hidden transform -translate-y-full opacity-0 transition-all duration-300">
-            <a href="index.html#portfolio" class="hover:text-lime-400 transition">Portfolio</a>
-            <a href="resume.html" class="hover:text-lime-400 transition">About me</a>
-            <a href="https://www.linkedin.com/in/adianto-wibisono-55bb34277" class="hover:text-lime-400 transition">LinkedIn</a>
+        <div
+            id="mobile-menu"
+            class="absolute top-full left-0 w-full bg-zinc-900/95 backdrop-blur-lg flex flex-col items-center py-6 space-y-4 text-lg md:hidden hidden opacity-0 -translate-y-2 transition-all duration-300"
+        >
+            <a href="index.html#portfolio" class="hover:text-lime-400 transition">
+                Portfolio
+            </a>
+            <a href="aboutme.html" class="text-lime-400 transition">
+                About me
+            </a>
+            <a
+                href="https://www.linkedin.com/in/adianto-wibisono-55bb34277"
+                class="hover:text-lime-400 transition"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                LinkedIn
+            </a>
         </div>
     </nav>
 
-    
+    <!-- About Me: Skills -->
+    <main class="pt-28">
+        <section class="flex flex-col justify-center items-center pt-12 pb-10 px-4 md:px-8 gap-8">
 
-    <!-- About me Box -->
-    <section class="flex flex-col justify-center items-center pt-40 pb-20 gap-8 p-8">
-        <div data-aos="fade-up" data-aos-duration="1000" class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-12 flex flex-col gap-10">
+            <article
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-6 md:p-12 flex flex-col gap-6 md:gap-10"
+            >
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h2 class="font-bold text-2xl">Keahlian</h2>
+                    <span class="text-zinc-400">
+                        <i>Bagian 1: Hard Skill</i>
+                    </span>
+                </div>
 
-            <!-- Early Age -->
-                        <div class="flex justify-between">
-                                <div><p class="font-bold text-2xl">Keahlian</p></div>
-                                <div><span class="text-zinc-400 ml-2"><i>Bagian 1: Hard Skill</i></span></div>
-                        </div>
-                        <p>
-                            Selama bekerja sebagai desainer grafis, saya telah menggunakan berbagai software desain, dan yang paling sering saya gunakan adalah Adobe Photoshop dan Adobe Illustrator karena kedua aplikasi tersebut sangat membantu dalam proses editing gambar maupun layouting.
-                        </p>
+                <p>
+                    Selama bekerja sebagai desainer grafis, saya telah menggunakan berbagai software desain, dan yang paling sering saya gunakan adalah Adobe Photoshop dan Adobe Illustrator karena kedua aplikasi tersebut sangat membantu dalam proses editing gambar maupun layouting.
+                </p>
 
-                         <p>
-                            Selain itu, saya juga memiliki keahlian di bidang fotografi produk, khususnya untuk kebutuhan marketplace dan katalog. Menurut saya, keunggulan utama saya berada di bidang fotografi karena saya memahami komposisi, pencahayaan, serta visual produk agar terlihat lebih menarik dan profesional.
-                        </p>
+                <p>
+                    Selain itu, saya juga memiliki keahlian di bidang fotografi produk, khususnya untuk kebutuhan marketplace dan katalog. Menurut saya, keunggulan utama saya berada di bidang fotografi karena saya memahami komposisi, pencahayaan, serta visual produk agar terlihat lebih menarik dan profesional.
+                </p>
 
-                        <p>  
-                            Saat ini, saya juga sedang mempelajari UI/UX dengan menggunakan Tailwind CSS untuk menunjang kemampuan teknis saya. Saya memiliki ketertarikan yang besar di bidang UI/UX, dan salah satu hasil pembelajaran saya adalah website portofolio yang saya buat sendiri.
-                        </p>
-        </div>
-        <!-- Early Age end -->
+                <p>
+                    Saat ini, saya juga sedang mempelajari UI/UX dengan menggunakan Tailwind CSS untuk menunjang kemampuan teknis saya. Saya memiliki ketertarikan yang besar di bidang UI/UX, dan salah satu hasil pembelajaran saya adalah website portofolio yang saya buat sendiri.
+                </p>
+            </article>
+        </section>
 
-         <!-- About me Box -->
-    <section class="flex flex-col justify-center items-center pt-10 pb-20 gap-8">
-        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-12 flex flex-col gap-10">
+        <!-- Career -->
+        <section class="flex flex-col justify-center items-center pb-10 px-4 md:px-8 gap-8">
 
-            <!-- karir -->
-                        <div class="flex justify-between">
-                                <div><p class="font-bold text-2xl">Karir</p></div>
-                                <div><span class="text-zinc-400 ml-2"><i>Bagian 2: Pekerjaan</i></span></div>
-                        </div>
-                        <p>
-                            Saya bekerja sebagai seorang desain grafis dimulai sejak 2019, pada saat itu saya mengambil cuti kuliah kemudian mencoba untuk bekerja. Saya di terima di perusahaan startup bernama Rentfix, Disana saya bekerja sebagai desainer grafis magang. Ditahun 2020 saya memilih keluar dan melanjutkan tugas akhir saya.
-                        </p>
-    
-                        <p>
-                            Di tahun 2021 saya mendapatkan pekerjaan pertama saya di PT. Inti Pesona Lestari. Disana saya diberi jabatan sebagai Junior Graphic Designer dan bertanggung jawab atas semua kebutuhan desain dan materi pemasaran digital. Disini saya belajar banyak hal mulai dari mendesign sticker untuk label kaleng pomade, dunia percetakan, belajar bagaimana memimpin sebuah tim, belajar bagaiaman menyampaikan arahan yang jelas dan tepat, mengelola waktu dengan baik & berani mengambil keputusan. Pengalaman ini sangat berharga bagi saya karena saya belajar banyak hal baru yang tidak saya dapatkan di bangku kuliah.
-                        </p>
+            <article
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay="200"
+                class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-6 md:p-12 flex flex-col gap-6 md:gap-10"
+            >
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h2 class="font-bold text-2xl">Karir</h2>
+                    <span class="text-zinc-400">
+                        <i>Bagian 2: Pekerjaan</i>
+                    </span>
+                </div>
 
-                           <p>
-                            Kemudian saya pindah ke perusahaan kedua yaitu Otoproject, disini saya bekerja sebagai desain grafis supervisor. Tanggung jawab saya mencakup pengelolaan tim desain, koordinasi proyek, dan memastikan kualitas desain sesuai standar perusahaan. Saya juga terlibat dalam perencanaan strategi pemasaran visual yang efektif untuk berbagai kampanye produk di marketplace. Pengalaman ini telah memperkuat kemampuan saya dalam memimpin tim dan mengelola proyek desain yang kompleks.
-                        </p>
-        </div>
-        <!-- karir end -->
+                <p>
+                    Saya bekerja sebagai seorang desain grafis dimulai sejak 2019, pada saat itu saya mengambil cuti kuliah kemudian mencoba untuk bekerja. Saya diterima di perusahaan startup bernama Rentfix. Di sana saya bekerja sebagai desainer grafis magang. Di tahun 2020 saya memilih keluar dan melanjutkan tugas akhir saya.
+                </p>
 
-          <!-- About me Box -->
-    <section class="flex flex-col justify-center items-center pt-10 pb-20 gap-8">
-        <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-12 flex flex-col gap-10">
+                <p>
+                    Di tahun 2021 saya mendapatkan pekerjaan pertama saya di PT. Inti Pesona Lestari. Di sana saya diberi jabatan sebagai Junior Graphic Designer dan bertanggung jawab atas semua kebutuhan desain dan materi pemasaran digital. Di sini saya belajar banyak hal mulai dari mendesain stiker untuk label kaleng pomade, dunia percetakan, belajar bagaimana memimpin sebuah tim, menyampaikan arahan yang jelas dan tepat, mengelola waktu dengan baik, serta berani mengambil keputusan. Pengalaman ini sangat berharga bagi saya karena saya belajar banyak hal baru yang tidak saya dapatkan di bangku kuliah.
+                </p>
 
-            <!-- Goals -->
-                        <div class="flex justify-between">
-                                <div><p class="font-bold text-2xl">Goals</p></div>
-                                <div><span class="text-zinc-400 ml-2"><i>Bagian 3: Tujuan kedepan</i></span></div>
-                        </div>
-                        <p>
-                            Dengan pengalaman yang saya miliki saat ini, saya ingin melanjutkan karier ke jenjang yang lebih tinggi, seperti menjadi Art Director atau Creative Director di masa depan. Saya juga berencana untuk terus mengembangkan keterampilan dalam bidang desain digital serta teknologi terbaru agar tetap relevan di industri yang terus berkembang. Selain itu, saya ingin berkontribusi pada proyek-proyek yang memberikan dampak positif bagi masyarakat, seperti di bidang energi terbarukan maupun inisiatif sosial.
-                        </p>
-    
+                <p>
+                    Kemudian saya pindah ke perusahaan kedua yaitu Otoproject. Di sini saya bekerja sebagai Graphic Design Supervisor. Tanggung jawab saya mencakup pengelolaan tim desain, koordinasi proyek, dan memastikan kualitas desain sesuai standar perusahaan. Saya juga terlibat dalam perencanaan strategi pemasaran visual yang efektif untuk berbagai kampanye produk di marketplace. Pengalaman ini telah memperkuat kemampuan saya dalam memimpin tim dan mengelola proyek desain yang kompleks.
+                </p>
+            </article>
+        </section>
+
         <!-- Goals -->
+        <section class="flex flex-col justify-center items-center pb-20 px-4 md:px-8 gap-8">
 
+            <article
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay="400"
+                class="bg-zinc-900/80 w-full max-w-4xl rounded-2xl border border-white/10 shadow-md p-6 md:p-12 flex flex-col gap-6 md:gap-10"
+            >
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                    <h2 class="font-bold text-2xl">Goals</h2>
+                    <span class="text-zinc-400">
+                        <i>Bagian 3: Tujuan ke depan</i>
+                    </span>
+                </div>
 
-        
-    </section>
-        <script>
-            // Language switcher logic
-            const langSwitch = document.getElementById('langSwitch');
-            function setLanguage(lang) {
-                document.querySelectorAll('[data-en]').forEach(el => {
-                    el.textContent = el.getAttribute('data-' + lang);
+                <p>
+                    Dengan pengalaman yang saya miliki saat ini, saya ingin melanjutkan karier ke jenjang yang lebih tinggi, seperti menjadi Art Director atau Creative Director di masa depan. Saya juga berencana untuk terus mengembangkan keterampilan dalam bidang desain digital serta teknologi terbaru agar tetap relevan di industri yang terus berkembang. Selain itu, saya ingin berkontribusi pada proyek-proyek yang memberikan dampak positif bagi masyarakat, seperti di bidang energi terbarukan maupun inisiatif sosial.
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // Mobile navigation
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const button = document.getElementById('menu-toggle');
+
+            if (!menu || !button) return;
+
+            const isHidden = menu.classList.contains('hidden');
+
+            if (isHidden) {
+                menu.classList.remove('hidden');
+
+                requestAnimationFrame(function () {
+                    menu.classList.remove('opacity-0', '-translate-y-2');
                 });
-                // Highlight active lang
-                document.getElementById('lang-en').classList.toggle('text-lime-400', lang === 'en');
-                document.getElementById('lang-en').classList.toggle('text-white', lang !== 'en');
-                document.getElementById('lang-id').classList.toggle('text-lime-400', lang === 'id');
-                document.getElementById('lang-id').classList.toggle('text-white', lang !== 'id');
+
+                button.setAttribute('aria-expanded', 'true');
+            } else {
+                menu.classList.add('opacity-0', '-translate-y-2');
+                button.setAttribute('aria-expanded', 'false');
+
+                setTimeout(function () {
+                    menu.classList.add('hidden');
+                }, 300);
             }
-            langSwitch.addEventListener('change', function() {
-                setLanguage(this.checked ? 'id' : 'en');
-            });
-            // Default: EN
-            setLanguage('en');
+        }
 
-            // Smooth page transition
-            document.addEventListener('DOMContentLoaded', function() {
-                document.body.classList.add('fade-in');
-                var links = document.querySelectorAll('a[href]:not([target])');
-                links.forEach(function(link) {
-                    link.addEventListener('click', function(e) {
-                        if (link.hostname === window.location.hostname && link.getAttribute('href')[0] !== '#') {
-                            e.preventDefault();
-                            document.body.classList.remove('fade-in');
-                            document.body.classList.add('fade-out');
-                            setTimeout(function() {
-                                window.location = link.href;
-                            }, 500);
-                        }
-                    });
-                });
+        // Close mobile menu when a navigation link is selected
+        document.querySelectorAll('#mobile-menu a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                const menu = document.getElementById('mobile-menu');
+                const button = document.getElementById('menu-toggle');
+
+                if (menu) {
+                    menu.classList.add('hidden', 'opacity-0', '-translate-y-2');
+                }
+
+                if (button) {
+                    button.setAttribute('aria-expanded', 'false');
+                }
             });
-        </script>
-        <script>
+        });
+
+        // Restore page visibility on Back/Forward navigation
+        window.addEventListener('pageshow', function () {
+            document.body.classList.remove('fade-out');
+            document.body.classList.add('fade-in');
+        });
+
+        // Initialize AOS safely
+        if (typeof AOS !== 'undefined') {
             AOS.init({
                 once: true,
                 offset: 100,
-                duration: 800,
+                duration: 800
             });
-        </script>
-</body>
-<script>
-    function toggleMenu() {
-        var menu = document.getElementById('mobile-menu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-            // Trigger reflow to enable animation
-            menu.offsetHeight;
-            menu.classList.remove('-translate-y-full', 'opacity-0');
-        } else {
-            menu.classList.add('-translate-y-full', 'opacity-0');
-            // Wait for animation to complete before hiding
-            setTimeout(() => {
-                menu.classList.add('hidden');
-            }, 300);
         }
-    }
-</script>
+    </script>
+
+</body>
 </html>
